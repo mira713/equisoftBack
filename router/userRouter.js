@@ -40,16 +40,16 @@ userRouter.post("/login", async(req,res)=>{
         if(user.length){
             bcrypt.compare(password, user[0].password, function(err,result){
                 if(result){
-                    res.send({"msg":"logged in",token,"user":user[0]})
+                    res.send({"msg":"logged in",token,"user":user[0],status:1})
                 }else{
-                    res.send("password mismatched")
+                    res.send({"msg":"not logged in",status:0})
                 }
             })
         }else{
-            res.send("user not found")
+            res.send({"msg":"not logged in",status:0})
         }
     }catch(e){
-        res.send(e)
+        res.send({"msg":e.msg,status:0})
     }
 })
 
