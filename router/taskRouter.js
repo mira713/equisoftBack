@@ -72,7 +72,7 @@ taskRouter.patch("/:id", async (req, res) => {
     const updateData = req.body;
 
     try {
-        const data = await TaskModel.findByIdAndUpdate(taskId, updateData, { new: true });
+        const data = await TaskModel.findByIdAndUpdate(taskId, updateData);
         res.send({
             message: "Task updated",
             status: 1,
