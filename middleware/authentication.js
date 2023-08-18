@@ -4,7 +4,7 @@ require("dotenv").config()
 
 
 const Authentication=(req,res,next)=>{
-    const token=req.headers.tkn;
+    const token=req.headers.authorization;
 
     if(token){
         jwt.verify(token,process.env.key,(err,user)=>{

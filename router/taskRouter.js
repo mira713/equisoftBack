@@ -50,7 +50,7 @@ taskRouter.get("/user", async (req, res) => {
         const token = req.headers.authorization;
         const decoded = jwt.verify(token, process.env.key);
         const { userId: user } = decoded;
-        const data = await TaskModel.find({ assign: user });
+        const data = await TaskModel.find({ user });
         res.send({
             message: "User data retrieved",
             status: 1,
