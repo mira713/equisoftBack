@@ -1,24 +1,33 @@
-const jwt = require('jsonwebtoken');
-require('dotenv').config();
+const express=require("express")
+const jwt=require("jsonwebtoken")
+require("dotenv").config()
 
 
-const authenticate = (req, res, next) => {
-    const token = req.headers.tkn
+const Authentication=(req,res,next)=>{
+    const token=req.headers.tkn;
+
     if(token){
-        jwt.verify(token, process.env.key, (err,decoded)=>{
-            console.log(decoded)
-            if(decoded){
-                req.body.user = decoded.userId
-                next();
-            }else{
-                res.send('token is broken')
+        jwt.verify(token,process.env.key,(err,user)=>{
+            if(err){
+                return res.send({
+                    message:"it looks like token is broken please take look",
+                    status:0,
+                    error:true
+
+                })
             }
+            req.user=user,
+            next()
         })
     }else{
-        res.send('not logged in')
+        res.send({
+            message:"You are not authenticated please login",
+            status:0,
+            error:true
+        })
     }
 }
 
 module.exports={
-    authenticate
+    Authentication
 }

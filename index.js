@@ -2,7 +2,8 @@ const express = require('express');
 require('dotenv').config();
 const {connection}= require('./config/db')
 const {userRouter} = require('./router/userRouter')
-const {authenticate} = require('./middleware/authentication');
+const {taskRouter} = require('./router/taskRouter');
+const {Authentication} = require('./middleware/authentication');
 const cors = require('cors');
 const app = express();
 
@@ -17,8 +18,9 @@ app.get('/',(req,res)=>{
 });
 
 
-app.use('/users',userRouter)
-app.use(authenticate);
+app.use('/user',userRouter)
+app.use(Authentication);
+app.use('/task', taskRouter)
 
 app.listen(process.env.port,async()=>{
     try {
