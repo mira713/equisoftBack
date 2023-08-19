@@ -120,6 +120,33 @@ userRouter.get("/:id", async (req, res) => {
     }
 })
 
+userRouter.get("/singleuser/:id", async (req, res) => {
+    const userId = req.params.id
+    try {
+        const user = await UserModel.findById(userId)
+        if (!user) {
+            res.send({
+                message: "user not found",
+                status: 0,
+                error: false
+            })
+            return
+        }
+        res.send({
+            message: " user details",
+            user,
+            status: 1,
+            error: false
+        })
+    } catch (error) {
+        res.send({
+            message: "Somthing went wrong",
+            status: 0,
+            error: true
+        })
+    }
+})
+
 userRouter.patch("/:id", async (req, res) => {
     const userId = req.params.id;
     const updatedata = req.body;
