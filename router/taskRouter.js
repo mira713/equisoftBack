@@ -67,44 +67,26 @@ taskRouter.get("/user", async (req, res) => {
 });
 
 // Update a task by ID
-// taskRouter.patch("/:id", async (req, res) => {
-//     const taskId = req.params.id;
-//     const updateData = req.body;
+taskRouter.patch("/:id", async (req, res) => {
+    const taskId = req.params.id;
+    const updateData = req.body;
 
-//     try {
-//         const data = await TaskModel.findByIdAndUpdate(taskId, updateData,{new : true});
-//         res.send({
-//             message: "Task updated",
-//             status: 1,
-//             error: false,
-//             data,
-//         });
-//     } catch (error) {
-//         res.send({
-//             message: "Something went wrong: " + error.message,
-//             status: 0,
-//             error: true,
-//         });
-//     }
-// });
-blogRouter.patch("/:id", async (req, res) => {
-    let { id: _id } = req.params;
-  
     try {
-      await  TaskModel.findByIdAndUpdate({ _id }, req.body);
-      res.send({
-        message: "Product updated",
-        status: 1,
-        error: false,
-      });
+        const data = await TaskModel.findByIdAndUpdate(taskId, updateData,{new : true});
+        res.send({
+            message: "Task updated",
+            status: 1,
+            error: false,
+            data,
+        });
     } catch (error) {
-      res.send({
-        message: "Something went wrong: " + error.message,
-        status: 0,
-        error: true,
-      });
+        res.send({
+            message: "Something went wrong: " + error.message,
+            status: 0,
+            error: true,
+        });
     }
-  });
+});
 
 // Delete a task by ID
 taskRouter.delete("/:id", async (req, res) => {
