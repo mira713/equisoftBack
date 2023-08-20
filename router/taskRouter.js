@@ -127,43 +127,6 @@ taskRouter.get("/:id", async (req, res) => {
     }
 });
 
-app.post('/assign-task/:taskId', async (req, res) => {
-    try {
-        const { taskId } = req.params;
-        const { assignedMembers, assignedBy } = req.body; // Include the ID of the user who assigned the task
-
-        const updatedTask = await Task.findOneAndUpdate(
-            { _id: taskId },
-            {
-                $addToSet: { checklists: assignedMembers },
-                assignedBy: assignedBy, // Store the ID of the user who assigned the task
-            },
-            { new: true }
-        );
-
-        res.json({ message: 'Task assigned successfully', task: updatedTask });
-    } catch (error) {
-        console.error('Error assigning task:', error);
-        res.status(500).json({ message: 'Error assigning task', error: error.message });
-    }
-});
-
-app.get('/tasks-assigned-to/:userId', async (req, res) => {
-    try {
-        const { userId } = req.params;
-
-        // Find tasks assigned to the specified user and populate the assignedBy field
-        const assignedTasks = await Task.find({ checklist: userId })
-            .populate('assignedBy', 'name') // Assuming the User model has a 'name' field
-            .exec();
-
-        res.json({ tasks: assignedTasks });
-    } catch (error) {
-        console.error('Error retrieving assigned tasks:', error);
-        res.status(500).json({ message: 'Error retrieving assigned tasks', error: error.message });
-    }
-});
-
 
 module.exports = {
     taskRouter
