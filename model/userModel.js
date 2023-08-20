@@ -6,16 +6,7 @@ const UserSchema=mongoose.Schema({
     email:{type:String},
     password:{type:String},
     phone:{type:Number},
-    assignby:[{
-        name: { type: String, required: true },
-        description: { type: String },
-        checklist: [{ type: String }],
-        comments: [{ type: String }],
-        project: { type: String },
-        assign: [{ type: String }],
-        dueDate: { type: Date },
-        labels: [{ type: String }]
-    }]
+    username:[{type:String}]
 },
 
 {

@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const TaskSchema = mongoose.Schema(
     {
-
         name: { type: String, required: true },
         description: { type: String },
         checklist: [{ type: String }],
@@ -11,7 +10,11 @@ const TaskSchema = mongoose.Schema(
         assign: [{ type: String }],
         dueDate: { type: Date },
         labels: [{ type: String }],
-        user:{type:String,required:true}
+        assignedBy: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'user', // Reference to the User model
+        },
+        user:{type:String,required:true},
     },
     {
         versionKey: false
